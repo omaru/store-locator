@@ -6,7 +6,7 @@ jdk:
   - oraclejdk8
 sudo: false
 script:
-  - ./gradlew check
+  - ./gradlew clean
   - ./gradlew test
   - ./gradlew jacocoTestReport
 after_success:
