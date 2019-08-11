@@ -1,0 +1,14 @@
+before_install:
+  - chmod +x gradlew
+language: java
+dist: trusty
+jdk:
+  - oraclejdk8
+sudo: false
+script:
+  - ./gradlew check
+  - ./gradlew test
+  - ./gradlew jacocoTestReport
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
