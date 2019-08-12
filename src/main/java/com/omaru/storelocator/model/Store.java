@@ -4,27 +4,24 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.security.Timestamp;
-import java.util.UUID;
 
 @Entity
-@Table(name = "store")
+@Table(name = "store",indexes = @Index(columnList = "uuid"))
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Store {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
+    @SequenceGenerator(name = "store_sequence", sequenceName = "store_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "store_sequence")
     @Column(name="store_id", updatable = false, nullable = false)
-    private UUID uuid;
+    private Long id;
+    @Column(name="uuid",nullable = false)
+    private String uuid;
     @Column(name="sap_store_id",  nullable = false)
     private Long sapStoreID;
     @Column(name="today_open", nullable = false)
