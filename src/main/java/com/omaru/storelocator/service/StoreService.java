@@ -13,8 +13,12 @@ public interface StoreService {
     Optional<Store> get(String uuid);
     /***
      * Retrieves all Stores available
-     * @param uuid
      */
     Collection<Store> get();
-
+    /***
+     * Saves a store
+     * @param store to save
+     * @return  saved store with assigned generated id
+     */
+    Store save(Store store);
 }

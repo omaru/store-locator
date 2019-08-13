@@ -26,4 +26,9 @@ public class DefaultStoreService implements StoreService {
         Iterable<Store> stores = storeRepository.findAll();
         return StreamSupport.stream(stores.spliterator(),false).collect(Collectors.toSet());
     }
+
+    @Override
+    public Store save(Store store) {
+        return storeRepository.save(store);
+    }
 }

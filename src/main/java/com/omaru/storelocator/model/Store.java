@@ -30,5 +30,8 @@ public class Store {
     private Timestamp todayClose;
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "store")
     private Location location;
+    public Store(String uuid){
+        setUuid(uuid);
+    }
 
 }
