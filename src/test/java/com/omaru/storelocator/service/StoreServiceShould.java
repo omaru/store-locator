@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Metrics;
@@ -46,12 +48,11 @@ public class StoreServiceShould {
 	@Test
 	void beAbleToRetrieveNStoresByLocation(){
 		Point referenceLocation = new Point(52.51790, 13.41239);
-		Distance oneKilometer = new Distance(1, Metrics.KILOMETERS);
-		GeoResults<Store> stores = storeService.getStoresByAddressLocationNear(referenceLocation,oneKilometer);
+		Pageable firstFive = new PageRequest(1,5);
+		GeoResults<Store> stores = storeService.getStoresByAddressLocationNear(referenceLocation,firstFive);
 		assertThat(stores.getContent(), hasSize(1));
 		Distance distanceToFirstStore = stores.getContent().get(0).getDistance();
 		assertThat(distanceToFirstStore.getMetric(), is(Metrics.KILOMETERS));
-		assertThat(distanceToFirstStore.getValue(), closeTo(0.862, 0.001));
-
+		assertThat(stores.getContent(),hasSize(5));
 	}
 }

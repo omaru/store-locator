@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.geo.Point;
 
 import javax.persistence.*;
 
@@ -11,7 +12,6 @@ import javax.persistence.*;
 @Table(name = "store_location")
 @Getter
 @Setter
-@NoArgsConstructor
 @EqualsAndHashCode
 public class Location {
     @Id
@@ -19,13 +19,11 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "store_location_sequence")
     @Column(name="store_location_id")
     private Long id;
-    @Column(name="latitude",nullable = false)
-    private Double latitude;
-    @Column(name="longitude",nullable = false)
-    private Double longitude;
+    @Column(name="location")
+    private final Point location;
     @Column(name="complex_number")
     private Integer complexNumber;
-    @Column(name="warning_message",nullable = false)
+    @Column(name="warning_message")
     private Boolean warningMessage=false;
     @Column(name="collection_point",nullable =false)
     private Boolean collectionPoint = false;
@@ -36,4 +34,7 @@ public class Location {
     private Store store;
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "location")
     private Address address;
+    public Location(Point location){
+        this.location=location;
+    }
 }

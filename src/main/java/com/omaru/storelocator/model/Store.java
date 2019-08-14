@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "store",indexes = @Index(columnList = "uuid"))
@@ -25,9 +25,9 @@ public class Store {
     @Column(name="sap_store_id",  nullable = false)
     private Long sapStoreID;
     @Column(name="today_open", nullable = false)
-    private Timestamp todayOpen;
+    private LocalTime todayOpen;
     @Column(name="today_close", nullable = false)
-    private Timestamp todayClose;
+    private LocalTime todayClose;
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "store")
     private Location location;
     public Store(String uuid){

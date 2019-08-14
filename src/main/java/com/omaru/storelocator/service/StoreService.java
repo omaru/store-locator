@@ -1,6 +1,7 @@
 package com.omaru.storelocator.service;
 
 import com.omaru.storelocator.model.Store;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
@@ -25,5 +26,5 @@ public interface StoreService {
      */
     Store save(Store store);
 
-    GeoResults<Store> getStoresByAddressLocationNear(Point referenceLocation, Distance oneKilometer);
+    GeoResults<Store> getStoresByAddressLocationNear(Point referenceLocation, Pageable pageable);
 }
