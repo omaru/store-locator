@@ -5,8 +5,7 @@ import com.omaru.storelocator.model.Location;
 import com.omaru.storelocator.model.Store;
 import org.springframework.data.geo.Point;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,20 +15,32 @@ public class MockUtil {
         throw new IllegalAccessException("utility class");
     }
     public static Collection<Store> getStores(){
-        return Stream.of(createStore("EOgKYx4XFiQAAAFJa_YYZ4At")).collect(Collectors.toSet());
+        return Stream.of(
+                getNewStoreWithCoordinates("1", new Point(51.778461,4.615551)),
+                getNewStoreWithCoordinates("2", new Point(51.778461,6.245829)),
+                getNewStoreWithCoordinates("3", new Point(52.264417,4.762433)),
+                getNewStoreWithCoordinates("4", new Point(51.399843,5.469597)),
+                getNewStoreWithCoordinates("5", new Point(51.923993,6.576066)),
+                getNewStoreWithCoordinates("6", new Point(51.275006,3.444601)),
+                getNewStoreWithCoordinates("7", new Point(52.645601,4.749492)),
+                getNewStoreWithCoordinates("8", new Point(52.665822,4.766146)),
+                getNewStoreWithCoordinates("9", new Point(51.778461,4.615551)),
+                getNewStoreWithCoordinates("10", new Point(52.633740,4.745031))
+        ).collect(Collectors.toSet());
     }
-    public static Store createStore(String uuid){
+    public static Store getNewStore(String uuid){
         Store store = new Store(uuid);
-        store.setSapStoreID(1234L);
-        store.setTodayOpen(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-        store.setTodayClose(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+        store.setSapStoreID(3605L);
+        store.setTodayOpen(LocalTime.of(8,00,00));
+        store.setTodayClose(LocalTime.of(20,00,00));
         return store;
     }
-    public static Store createStoreWithCoordinates(String storeUUID , Point coordinates){
-        Store store = createStore(storeUUID);
+    public static Store getNewStoreWithCoordinates(String storeUUID , Point coordinates){
+        Store store = getNewStore(storeUUID);
         Location location = new Location(coordinates);
         location.setComplexNumber(33249);
         location.setAddress(createAddress());
+        return store;
     }
 
     private static Address createAddress() {
@@ -39,5 +50,6 @@ public class MockUtil {
         address.setPostalCode("3295 BD");
         address.setStreet("Kerkstraat");
         address.setStreet2("37");
+        return address;
     }
 }

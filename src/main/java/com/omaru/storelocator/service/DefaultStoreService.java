@@ -2,6 +2,7 @@ package com.omaru.storelocator.service;
 
 import com.omaru.storelocator.model.Store;
 import com.omaru.storelocator.repository.StoreRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
@@ -37,7 +38,7 @@ public class DefaultStoreService implements StoreService {
     }
 
     @Override
-    public GeoResults<Store> getStoresByAddressLocationNear(Point referenceLocation, Pageable pageable) {
-        return storeRepository.findByAddressLocationNear(referenceLocation,pageable);
+    public Page<Store> getStoresByAddressLocationNear(Point referenceLocation, Pageable pageable) {
+        return storeRepository.findByLocationNear(referenceLocation,pageable);
     }
 }

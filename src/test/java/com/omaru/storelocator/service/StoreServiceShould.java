@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.geo.Distance;
@@ -14,7 +15,6 @@ import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import static org.hamcrest.Matchers.*;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -22,8 +22,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -41,18 +41,15 @@ public class StoreServiceShould {
 	}
 	@Test	
 	void beAbleToRetrieveStoreByUUID(){
-		Optional<Store> store = storeService.get("EOgKYx4XFiQAAAFJa_YYZ4At");
+		Optional<Store> store = storeService.get("1");
 		assertTrue(store.isPresent());
-		assertThat(store.get().getUuid(),is("EOgKYx4XFiQAAAFJa_YYZ4At"));
+		assertThat(store.get().getUuid(),is("1"));
 	}
 	@Test
 	void beAbleToRetrieveNStoresByLocation(){
-		Point referenceLocation = new Point(52.51790, 13.41239);
+		Point storeSixReferenceLocation = new Point(51.275006, 3.444601);
 		Pageable firstFive = new PageRequest(1,5);
-		GeoResults<Store> stores = storeService.getStoresByAddressLocationNear(referenceLocation,firstFive);
-		assertThat(stores.getContent(), hasSize(1));
-		Distance distanceToFirstStore = stores.getContent().get(0).getDistance();
-		assertThat(distanceToFirstStore.getMetric(), is(Metrics.KILOMETERS));
+		Page<Store> stores = storeService.getStoresByAddressLocationNear(storeSixReferenceLocation,firstFive);
 		assertThat(stores.getContent(),hasSize(5));
 	}
 }
