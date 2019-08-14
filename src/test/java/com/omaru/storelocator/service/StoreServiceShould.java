@@ -29,6 +29,7 @@ public class StoreServiceShould {
 		storeService = new DefaultStoreService(storeRepository);
 		Collection<Store> stores = MockUtil.getStores();
 		Consumer<Store> saveStores = s->{s.setId(null);storeService.save(s);};
+		stores.stream().forEach(saveStores);
 
 	}
 	@Test	
