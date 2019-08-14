@@ -1,10 +1,15 @@
 package com.omaru.storelocator.repository;
 
 import com.omaru.storelocator.model.Store;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.GeoResults;
+import org.springframework.data.geo.Point;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
 public interface StoreRepository  extends PagingAndSortingRepository<Store, Long> {
     Optional<Store> findByUuid(String uuid);
+    GeoResults<Store> findByAddressLocationNear(Point point, Distance distance);
+
 }
