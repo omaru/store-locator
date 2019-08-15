@@ -40,6 +40,7 @@ public class MockUtil {
         Location location = new Location(coordinates);
         location.setComplexNumber(33249);
         location.setAddress(createAddress());
+        store.setLocation(location);
         return store;
     }
 

@@ -3,22 +3,28 @@ package com.omaru.storelocator.service;
 import com.omaru.storelocator.model.Store;
 import com.omaru.storelocator.repository.StoreRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.GeoPage;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
+@Component
 public class DefaultStoreService implements StoreService {
 
     private StoreRepository storeRepository;
     @Inject
     public DefaultStoreService(StoreRepository storeRepository){
         this.storeRepository=storeRepository;
+
     }
 
     @Override
@@ -38,7 +44,16 @@ public class DefaultStoreService implements StoreService {
     }
 
     @Override
-    public Page<Store> getStoresByAddressLocationNear(Point referenceLocation, Pageable pageable) {
-        return storeRepository.findByLocationLocationNear(referenceLocation,pageable);
+    public GeoPage<Store> getStoresByAddressLocationNear(Point referenceLocation, PageRequest pageRequest) {
+        return storeRepository.findByLocationLocationNear(referenceLocation,pageRequest);
+    }
+
+    @Override
+    public GeoResults<Store> getStoresByAddressLocationNear(Point referenceLocation, Distance distance) {
+        return storeRepository.findByLocationLocationNear(referenceLocation,distance);
+    }
+    @Override
+    public void deleteAll() {
+        storeRepository.deleteAll();
     }
 }
