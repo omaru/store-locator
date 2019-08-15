@@ -39,6 +39,6 @@ public class DefaultStoreService implements StoreService {
 
     @Override
     public Page<Store> getStoresByAddressLocationNear(Point referenceLocation, Pageable pageable) {
-        return storeRepository.findByLocationNear(referenceLocation,pageable);
+        return storeRepository.findByLocationLocationNear(referenceLocation,pageable);
     }
 }

@@ -12,5 +12,5 @@ import java.util.Optional;
 
 public interface StoreRepository  extends PagingAndSortingRepository<Store, Long> {
     Optional<Store> findByUuid(String uuid);
-    Page<Store> findByLocationNear(Point point, Pageable pageable);
+    Page<Store> findByLocationLocationNear(Point point, Pageable pageable);
 }
