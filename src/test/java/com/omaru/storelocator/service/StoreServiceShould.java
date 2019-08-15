@@ -1,16 +1,14 @@
 package com.omaru.storelocator.service;
 
 import com.omaru.storelocator.model.Store;
-import com.omaru.storelocator.repository.StoreRepository;
 import com.omaru.storelocator.util.MockUtil;
+import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.domain.Page;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.geo.Point;
+import org.springframework.data.geo.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.inject.Inject;
@@ -18,20 +16,17 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(SpringExtension.class)
-@DataJpaTest
+@SpringBootTest
 public class StoreServiceShould {
-	private StoreService storeService;
 	@Inject
-	private StoreRepository storeRepository;
+	private StoreService storeService;
+	private Collection<Store> stores = MockUtil.getStores();
 	@BeforeEach
 	void setUp(){
-		storeService = new DefaultStoreService(storeRepository);
-		Collection<Store> stores = MockUtil.getStores();
+		storeService.deleteAll();
 		Consumer<Store> saveStores = s->{s.setId(null);storeService.save(s);};
 		stores.stream().forEach(saveStores);
 
@@ -40,13 +35,30 @@ public class StoreServiceShould {
 	void beAbleToRetrieveStoreByUUID(){
 		Optional<Store> store = storeService.get("1");
 		assertTrue(store.isPresent());
-		assertThat(store.get().getUuid(),is("1"));
+		assertThat(store.get().getUuid()).isEqualTo("1");
 	}
 	@Test
 	void beAbleToRetrieveNStoresByLocation(){
-		Point storeSixReferenceLocation = new Point(51.275006, 3.444601);
-		Pageable firstFive = new PageRequest(1,5);
-		Page<Store> stores = storeService.getStoresByAddressLocationNear(storeSixReferenceLocation,firstFive);
-		assertThat(stores.getContent(),hasSize(5));
+		Store firstStoreToBeFound = stores.iterator().next();
+		Point firstStoreReferenceLocation = firstStoreToBeFound.getLocation().getLocation();
+		PageRequest request = PageRequest.of(0,5);
+		GeoPage<Store> stores = storeService.getStoresByAddressLocationNear(firstStoreReferenceLocation,request);
+		GeoResult<Store> firstGeoResult = stores.getContent().get(0);
+		assertThat(stores.getContent())
+				.hasSize(5);
+		assertThat(firstGeoResult.getContent().getSapStoreID())
+				.isEqualTo(firstStoreToBeFound.getSapStoreID());
+		assertThat(firstGeoResult.getDistance().getValue())
+				.isCloseTo(0.0, Percentage.withPercentage(0.01));
+	}
+	@Test
+	void beAbleToRetrieveNStoresByLocationBetweenAGivenDistance(){
+		Distance oneKilometer = new Distance(1, Metrics.KILOMETERS);
+		Point referenceLocation = new Point(51.770961,4.613171);
+		PageRequest request = PageRequest.of(0,5);
+		GeoResults<Store> stores = storeService.getStoresByAddressLocationNear(referenceLocation,oneKilometer);
+		assertThat(stores).hasSize(2);
+		Distance firstStoreDistance =stores.getContent().get(0).getDistance();
+		assertThat(firstStoreDistance.getValue()).isCloseTo(0.87334,Percentage.withPercentage(0.012));
 	}
 }
