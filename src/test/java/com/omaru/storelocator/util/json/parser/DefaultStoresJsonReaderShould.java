@@ -19,13 +19,14 @@ import java.util.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DefaultStoresJsonReaderShould {
-    public static final String FILE_JSON_TEST_SAMPLE_NAME="store-test.json";
+    public static final String FILE_JSON_TEST_SAMPLE_NAME = "store-test.json";
     private StoresJsonReader storesJsonReader;
 
     @BeforeEach
-    public void setUp(){
+    void setUp() {
         storesJsonReader = new DefaultStoresJsonReader();
     }
+
     @Test
     void beAbleToParseFromResource() throws IOException, ParseException {
         ClassPathResource resource = new ClassPathResource(FILE_JSON_TEST_SAMPLE_NAME);
@@ -34,8 +35,8 @@ public class DefaultStoresJsonReaderShould {
         Store store = stores.iterator().next();
         assertThat(store.getUuid()).isEqualTo("EOgKYx4XFiQAAAFJa_YYZ4At");
         assertThat(store.getSapStoreID()).isEqualTo(3605);
-        assertThat(store.getTodayOpen()).isEqualTo(LocalTime.of(8,00));
-        assertThat(store.getTodayClose()).isEqualTo(LocalTime.of(20,00));
+        assertThat(store.getTodayOpen()).isEqualTo(LocalTime.of(8, 00));
+        assertThat(store.getTodayClose()).isEqualTo(LocalTime.of(20, 00));
         Location location = store.getLocation();
         assertThat(location.getCollectionPoint()).isTrue();
         assertThat(location.getComplexNumber()).isEqualTo(33249);
@@ -51,9 +52,10 @@ public class DefaultStoresJsonReaderShould {
         assertThat(address.getStreet3()).isNullOrEmpty();
         assertThat(address.getAddressName()).isEqualTo("Jumbo 's Gravendeel Gravendeel Centrum");
     }
+
     @Test
     void throwJsonReaderExceptionWhenLatitudeIsNullOrEmpty() throws IOException, ParseException {
-        String jsonInput="{\n" +
+        String jsonInput = "{\n" +
                 "  \"stores\": [\n" +
                 "    {\n" +
                 "      \"city\": \"'s Gravendeel\",\n" +
@@ -76,8 +78,8 @@ public class DefaultStoresJsonReaderShould {
                 "  ]\n" +
                 "}";
         final InputStream inputStream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
-        Assertions.assertThrows(StoreJsonReaderException.class,()-> storesJsonReader.from(inputStream));
-        jsonInput="{\n" +
+        Assertions.assertThrows(StoreJsonReaderException.class, () -> storesJsonReader.from(inputStream));
+        jsonInput = "{\n" +
                 "  \"stores\": [\n" +
                 "    {\n" +
                 "      \"city\": \"'s Gravendeel\",\n" +
@@ -100,11 +102,12 @@ public class DefaultStoresJsonReaderShould {
                 "  ]\n" +
                 "}";
         final InputStream stream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
-        Assertions.assertThrows(StoreJsonReaderException.class,()-> storesJsonReader.from(stream));
+        Assertions.assertThrows(StoreJsonReaderException.class, () -> storesJsonReader.from(stream));
     }
+
     @Test
     void throwJsonReaderExceptionWhenLongitudeIsNullOrEmpty() throws IOException, ParseException {
-        String jsonInput="{\n" +
+        String jsonInput = "{\n" +
                 "  \"stores\": [\n" +
                 "    {\n" +
                 "      \"city\": \"'s Gravendeel\",\n" +
@@ -127,8 +130,8 @@ public class DefaultStoresJsonReaderShould {
                 "  ]\n" +
                 "}";
         final InputStream inputStream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
-        Assertions.assertThrows(StoreJsonReaderException.class,()-> storesJsonReader.from(inputStream));
-        jsonInput="{\n" +
+        Assertions.assertThrows(StoreJsonReaderException.class, () -> storesJsonReader.from(inputStream));
+        jsonInput = "{\n" +
                 "  \"stores\": [\n" +
                 "    {\n" +
                 "      \"city\": \"'s Gravendeel\",\n" +
@@ -151,6 +154,6 @@ public class DefaultStoresJsonReaderShould {
                 "  ]\n" +
                 "}";
         final InputStream stream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
-        Assertions.assertThrows(StoreJsonReaderException.class,()-> storesJsonReader.from(stream));
+        Assertions.assertThrows(StoreJsonReaderException.class, () -> storesJsonReader.from(stream));
     }
 }
