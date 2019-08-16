@@ -1,19 +1,16 @@
-package com.omaru.storelocator.model;
+package com.omaru.storelocator.domain.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+@Document
 @Getter
 @Setter
 @EqualsAndHashCode
 public class Location {
-    @Id
-    private String id;
     @GeoSpatialIndexed
     private final Point location;
     private Integer complexNumber;

@@ -1,4 +1,4 @@
-package com.omaru.storelocator.model;
+package com.omaru.storelocator.domain.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

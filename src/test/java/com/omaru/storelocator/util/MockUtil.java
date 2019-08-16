@@ -1,8 +1,8 @@
 package com.omaru.storelocator.util;
 
-import com.omaru.storelocator.model.Address;
-import com.omaru.storelocator.model.Location;
-import com.omaru.storelocator.model.Store;
+import com.omaru.storelocator.domain.model.Address;
+import com.omaru.storelocator.domain.model.Location;
+import com.omaru.storelocator.domain.model.Store;
 import org.springframework.data.geo.Point;
 
 import java.time.LocalTime;

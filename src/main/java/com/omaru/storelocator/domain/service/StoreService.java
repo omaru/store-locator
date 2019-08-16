@@ -1,9 +1,7 @@
-package com.omaru.storelocator.service;
+package com.omaru.storelocator.domain.service;
 
-import com.omaru.storelocator.model.Store;
-import org.springframework.data.domain.Page;
+import com.omaru.storelocator.domain.model.Store;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoPage;
 import org.springframework.data.geo.GeoResults;

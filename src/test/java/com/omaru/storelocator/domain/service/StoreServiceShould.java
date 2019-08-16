@@ -1,6 +1,6 @@
-package com.omaru.storelocator.service;
+package com.omaru.storelocator.domain.service;
 
-import com.omaru.storelocator.model.Store;
+import com.omaru.storelocator.domain.model.Store;
 import com.omaru.storelocator.util.MockUtil;
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeEach;

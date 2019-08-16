@@ -1,6 +1,6 @@
-package com.omaru.storelocator.repository;
+package com.omaru.storelocator.domain.repository;
 
-import com.omaru.storelocator.model.Store;
+import com.omaru.storelocator.domain.model.Store;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoPage;
