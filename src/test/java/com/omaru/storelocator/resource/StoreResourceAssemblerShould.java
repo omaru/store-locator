@@ -17,9 +17,16 @@ public class StoreResourceAssemblerShould {
     }
     @Test
     void containNavigationLinkToSelf() {
-        Department department = getEmployees().iterator().next().getDepartment();
-        DepartmentResource departmentResource = departmentResourceAssembler.toResource(department);
-        assertThat(departmentResource.getLink("self").getHref()).contains("/department/" + department.getId());
-
+        Store store = getStores().iterator().next();
+        store.setId("123");
+        StoreResource storeResource = storeResourceAssembler.toResource(store);
+        assertThat(storeResource.getLink("self").getHref()).contains("/store/" + store.getId());
+    }
+    @Test
+    void containNavigationLinkToLocation() {
+        Store store = getStores().iterator().next();
+        store.setId("123");
+        StoreResource storeResource = storeResourceAssembler.toResource(store);
+        assertThat(storeResource.getLink(Relations.LOCATION.getRelation())).isNotNull();
     }
 }

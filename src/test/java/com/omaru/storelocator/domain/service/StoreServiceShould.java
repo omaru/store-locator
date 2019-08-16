@@ -33,10 +33,11 @@ public class StoreServiceShould {
 	}
 	@Test	
 	void beAbleToRetrieveStoreByUUID(){
-		Optional<Store> store = storeService.get("1");
+		Optional<Store> store = storeService.getByUuid("1");
 		assertTrue(store.isPresent());
 		assertThat(store.get().getUuid()).isEqualTo("1");
 	}
+
 	@Test
 	void beAbleToRetrieveNStoresByLocation(){
 		Store firstStoreToBeFound = stores.iterator().next();
@@ -55,7 +56,6 @@ public class StoreServiceShould {
 	void beAbleToRetrieveNStoresByLocationBetweenAGivenDistance(){
 		Distance oneKilometer = new Distance(1, Metrics.KILOMETERS);
 		Point referenceLocation = new Point(51.770961,4.613171);
-		PageRequest request = PageRequest.of(0,5);
 		GeoResults<Store> stores = storeService.getStoresByAddressLocationNear(referenceLocation,oneKilometer);
 		assertThat(stores).hasSize(2);
 		Distance firstStoreDistance =stores.getContent().get(0).getDistance();
