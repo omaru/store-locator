@@ -16,7 +16,7 @@ import java.util.Collection;
 
 @RestController
 public class StoreController {
-    private final StoreService storeService
+    private final StoreService storeService;
     private final StoreResourceAssembler storeResourceAssembler;
     @Inject
     public StoreController(StoreService storeService, StoreResourceAssembler storeResourceAssembler){
