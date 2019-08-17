@@ -12,10 +12,15 @@ import java.util.Optional;
 
 public interface StoreService {
     /***
+     * Retrieves a store by id
+     * @param id
+     */
+    Optional<Store> get(String id);
+    /***
      * Retrieves a store by uuid
      * @param uuid
      */
-    Optional<Store> get(String uuid);
+    Optional<Store> getByUuid(String uuid);
     /***
      * Retrieves all Stores available
      */

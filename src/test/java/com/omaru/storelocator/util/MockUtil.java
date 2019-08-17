@@ -3,16 +3,24 @@ package com.omaru.storelocator.util;
 import com.omaru.storelocator.domain.model.Address;
 import com.omaru.storelocator.domain.model.Location;
 import com.omaru.storelocator.domain.model.Store;
+import com.omaru.storelocator.resource.StoreResource;
+import com.omaru.storelocator.resource.StoreResourceAssembler;
 import org.springframework.data.geo.Point;
 
 import java.time.LocalTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MockUtil {
+    private static final StoreResourceAssembler storeResourceAssembler = new StoreResourceAssembler();
+
     private MockUtil() throws IllegalAccessException{
         throw new IllegalAccessException("utility class");
+    }
+    public static List<StoreResource> getStoreResources(){
+        return storeResourceAssembler.toResources(getStores());
     }
     public static Collection<Store> getStores(){
         return Stream.of(

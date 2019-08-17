@@ -25,8 +25,13 @@ public class DefaultStoreService implements StoreService {
     }
 
     @Override
-    public Optional<Store> get(String uuid) {
+    public Optional<Store> getByUuid(String uuid) {
         return storeRepository.findByUuid(uuid);
+    }
+
+    @Override
+    public Optional<Store> get(String id) {
+        return storeRepository.findById(id);
     }
 
     @Override
