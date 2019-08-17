@@ -47,14 +47,7 @@ public class DefaultCommandLineDataIngester implements CommandLineDataIngester{
     }
 
     private Optional<String> getFileRoute(CommandLine cmd) {
-        Optional<String> script = Optional.empty();
-        if (cmd.hasOption("i")) {
-            String value = cmd.getOptionValue("i");
-            if(isNotBlank(value)){
-                script = Optional.of(value);
-            }
-        }
-        return script;
+        return  Optional.ofNullable(cmd.getOptionValue("i"));
     }
 
 }

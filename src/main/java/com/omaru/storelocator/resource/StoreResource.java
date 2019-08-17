@@ -3,11 +3,13 @@ package com.omaru.storelocator.resource;
 import com.omaru.storelocator.domain.model.Location;
 import com.omaru.storelocator.domain.model.Store;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.time.LocalTime;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class StoreResource extends ResourceSupport {
     private String uuid;
     private Long sapStoreID;
