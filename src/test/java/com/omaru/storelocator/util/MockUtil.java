@@ -36,14 +36,14 @@ public class MockUtil {
                 getNewStoreWithCoordinates("10", new Point(52.633740,4.745031))
         ).collect(Collectors.toSet());
     }
-    public static Store getNewStore(String uuid){
+    private static Store getNewStore(String uuid){
         Store store = new Store(uuid);
         store.setSapStoreID(3605L);
-        store.setTodayOpen(LocalTime.of(8,00,00));
-        store.setTodayClose(LocalTime.of(20,00,00));
+        store.setTodayOpen(LocalTime.of(8, 0, 0));
+        store.setTodayClose(LocalTime.of(20, 0, 0));
         return store;
     }
-    public static Store getNewStoreWithCoordinates(String storeUUID , Point coordinates){
+    private static Store getNewStoreWithCoordinates(String storeUUID, Point coordinates){
         Store store = getNewStore(storeUUID);
         Location location = new Location(coordinates);
         location.setComplexNumber(33249);

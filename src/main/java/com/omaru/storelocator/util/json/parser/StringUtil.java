@@ -1,6 +1,6 @@
 package com.omaru.storelocator.util.json.parser;
 
-public class StringUtil {
+class StringUtil {
     private StringUtil() throws IllegalAccessException {
         throw new IllegalAccessException("utility class");
     }

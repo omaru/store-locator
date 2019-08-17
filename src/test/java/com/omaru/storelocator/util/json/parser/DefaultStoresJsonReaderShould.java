@@ -3,23 +3,22 @@ package com.omaru.storelocator.util.json.parser;
 import com.omaru.storelocator.domain.model.Address;
 import com.omaru.storelocator.domain.model.Location;
 import com.omaru.storelocator.domain.model.Store;
-import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DefaultStoresJsonReaderShould {
-    public static final String FILE_JSON_TEST_SAMPLE_NAME = "store-test.json";
+class DefaultStoresJsonReaderShould {
+    private static final String FILE_JSON_TEST_SAMPLE_NAME = "store-test.json";
     private StoresJsonReader storesJsonReader;
 
     @BeforeEach
@@ -28,15 +27,15 @@ public class DefaultStoresJsonReaderShould {
     }
 
     @Test
-    void beAbleToParseFromResource() throws IOException, ParseException {
+    void beAbleToParseFromResource() {
         ClassPathResource resource = new ClassPathResource(FILE_JSON_TEST_SAMPLE_NAME);
         Collection<Store> stores = storesJsonReader.from(resource);
         assertThat(stores).hasSize(2);
         Store store = stores.iterator().next();
         assertThat(store.getUuid()).isEqualTo("EOgKYx4XFiQAAAFJa_YYZ4At");
         assertThat(store.getSapStoreID()).isEqualTo(3605);
-        assertThat(store.getTodayOpen()).isEqualTo(LocalTime.of(8, 00));
-        assertThat(store.getTodayClose()).isEqualTo(LocalTime.of(20, 00));
+        assertThat(store.getTodayOpen()).isEqualTo(LocalTime.of(8, 0));
+        assertThat(store.getTodayClose()).isEqualTo(LocalTime.of(20, 0));
         Location location = store.getLocation();
         assertThat(location.getCollectionPoint()).isTrue();
         assertThat(location.getComplexNumber()).isEqualTo(33249);
@@ -54,7 +53,7 @@ public class DefaultStoresJsonReaderShould {
     }
 
     @Test
-    void throwJsonReaderExceptionWhenLatitudeIsNullOrEmpty() throws IOException, ParseException {
+    void throwJsonReaderExceptionWhenLatitudeIsNullOrEmpty() {
         String jsonInput = "{\n" +
                 "  \"stores\": [\n" +
                 "    {\n" +
@@ -77,7 +76,7 @@ public class DefaultStoresJsonReaderShould {
                 "    }\n" +
                 "  ]\n" +
                 "}";
-        final InputStream inputStream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
+        final InputStream inputStream = new ByteArrayInputStream(jsonInput.getBytes(StandardCharsets.UTF_8));
         Assertions.assertThrows(StoreJsonReaderException.class, () -> storesJsonReader.from(inputStream));
         jsonInput = "{\n" +
                 "  \"stores\": [\n" +
@@ -101,12 +100,12 @@ public class DefaultStoresJsonReaderShould {
                 "    }\n" +
                 "  ]\n" +
                 "}";
-        final InputStream stream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
+        final InputStream stream = new ByteArrayInputStream(jsonInput.getBytes(StandardCharsets.UTF_8));
         Assertions.assertThrows(StoreJsonReaderException.class, () -> storesJsonReader.from(stream));
     }
 
     @Test
-    void throwJsonReaderExceptionWhenLongitudeIsNullOrEmpty() throws IOException, ParseException {
+    void throwJsonReaderExceptionWhenLongitudeIsNullOrEmpty() {
         String jsonInput = "{\n" +
                 "  \"stores\": [\n" +
                 "    {\n" +
@@ -129,7 +128,7 @@ public class DefaultStoresJsonReaderShould {
                 "    }\n" +
                 "  ]\n" +
                 "}";
-        final InputStream inputStream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
+        final InputStream inputStream = new ByteArrayInputStream(jsonInput.getBytes(StandardCharsets.UTF_8));
         Assertions.assertThrows(StoreJsonReaderException.class, () -> storesJsonReader.from(inputStream));
         jsonInput = "{\n" +
                 "  \"stores\": [\n" +
@@ -153,11 +152,11 @@ public class DefaultStoresJsonReaderShould {
                 "    }\n" +
                 "  ]\n" +
                 "}";
-        final InputStream stream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
+        final InputStream stream = new ByteArrayInputStream(jsonInput.getBytes(StandardCharsets.UTF_8));
         Assertions.assertThrows(StoreJsonReaderException.class, () -> storesJsonReader.from(stream));
     }
     @Test
-    void whenClosedTimeToNull() throws IOException, ParseException {
+    void whenClosedTimeToNull() {
         String jsonInput = "{\n" +
                 "  \"stores\": [\n" +
                 "    {\n" +
@@ -180,7 +179,7 @@ public class DefaultStoresJsonReaderShould {
                 "    }\n" +
                 "  ]\n" +
                 "}";
-        final InputStream inputStream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
+        final InputStream inputStream = new ByteArrayInputStream(jsonInput.getBytes(StandardCharsets.UTF_8));
         Collection<Store> stores = storesJsonReader.from(inputStream);
         assertThat(stores).hasSize(1);
         assertThat(stores.iterator().next().getTodayOpen()).isNull();

@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DefaultCommandLineMenu implements CommandLineMenu {
-    private String applicationName;
-    private Options options = new Options();
-    private HelpFormatter formatter = new HelpFormatter();
-    private CommandLineParser parser = new DefaultParser();
+    private final String applicationName;
+    private final Options options = new Options();
+    private final HelpFormatter formatter = new HelpFormatter();
+    private final CommandLineParser parser = new DefaultParser();
     public DefaultCommandLineMenu(@Value("${spring.application.name}")String applicationName){
         this.applicationName = applicationName;
         setOptions();

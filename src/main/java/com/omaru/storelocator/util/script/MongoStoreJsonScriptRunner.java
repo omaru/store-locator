@@ -13,8 +13,8 @@ import java.util.function.Supplier;
 
 @Component
 public class MongoStoreJsonScriptRunner implements ScriptRunner {
-    private StoreService storeService;
-    private StoresJsonReader storesjsonReader;
+    private final StoreService storeService;
+    private final StoresJsonReader storesjsonReader;
     @Inject
     public MongoStoreJsonScriptRunner(StoreService storeService, StoresJsonReader storesjsonReader){
         this.storeService = storeService;
@@ -27,10 +27,10 @@ public class MongoStoreJsonScriptRunner implements ScriptRunner {
     }
 
     @Override
-    public void run(InputStream stream) throws Exception{
+    public void run(InputStream stream) {
         run(()-> storesjsonReader.from(stream));
     }
     private void run(Supplier<Collection<Store>> supplier){
-        supplier.get().stream().forEach(storeService::save);
+        supplier.get().forEach(storeService::save);
     }
 }

@@ -38,19 +38,20 @@ public class DefaultStoresJsonReader implements StoresJsonReader {
             throw new StoreJsonReaderException("unable to parse input", e);
         }
     }
+    @SuppressWarnings("unchecked")
     @Override
     public  Collection<Store> from(InputStream stream) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
             JSONParser parser = new JSONParser();
             JSONObject jsonStores = (JSONObject) parser.parse(reader);
             JSONArray jsonStoresList = (JSONArray) jsonStores.get("stores");
-            return (Collection<Store>) jsonStoresList.stream().map(DefaultStoresJsonReader::toStore).collect(Collectors.toSet());
+            return (Collection<Store>) jsonStoresList.stream().map(this::toStore).collect(Collectors.toSet());
         }catch(IOException | ParseException e){
             throw new StoreJsonReaderException("unable to parse input",e);
         }
     }
 
-    private static Store toStore(Object o){
+    private  Store toStore(Object o){
         JSONObject storeJson = (JSONObject) o;
         Store store = new Store();
         store.setUuid(storeJson.get("uuid").toString());
@@ -65,7 +66,7 @@ public class DefaultStoresJsonReader implements StoresJsonReader {
         return store;
     }
 
-    private static Location toLocation(JSONObject storeJson) throws ParseException {
+    private  Location toLocation(JSONObject storeJson) throws ParseException {
         if (isNullOrBlank(storeJson.get("latitude"))) {
             throw new ParseException(ERROR_UNEXPECTED_EXCEPTION, "latitude field is null!");
         }
@@ -84,7 +85,7 @@ public class DefaultStoresJsonReader implements StoresJsonReader {
 
     }
 
-    private static Address toAddress(JSONObject storeJson) {
+    private  Address toAddress(JSONObject storeJson) {
         Address address = new Address();
         address.setAddressName(toStringIfNotNull(storeJson.get("addressName")));
         address.setStreet(toStringIfNotNull(storeJson.get("street")));
@@ -95,7 +96,7 @@ public class DefaultStoresJsonReader implements StoresJsonReader {
         return address;
     }
 
-    private static LocalTime todayTime(Object value) {
+    private  LocalTime todayTime(Object value) {
         if (isNull(value)) {
             return null;
         }
@@ -103,15 +104,15 @@ public class DefaultStoresJsonReader implements StoresJsonReader {
         return parseTimeValue(todayClose);
     }
 
-    private static final LocalTime parseTimeValue(String time) {
+    private  LocalTime parseTimeValue(String time) {
         if(storeIsClosed(time)){
             return null;
         }
-        String hourMinutes[] = time.split(":");
+        String[] hourMinutes = time.split(":");
         return LocalTime.of(parseInt(hourMinutes[HOUR_INDEX]), parseInt(hourMinutes[MINUTE_INDEX]));
     }
 
-    private static boolean storeIsClosed(String time) {
+    private  boolean storeIsClosed(String time) {
         return CLOSED_STORE.equals(time);
     }
 }

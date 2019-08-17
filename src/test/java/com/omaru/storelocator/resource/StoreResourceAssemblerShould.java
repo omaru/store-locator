@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static com.omaru.storelocator.util.MockUtil.getStores;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StoreResourceAssemblerShould {
+class StoreResourceAssemblerShould {
     private final StoreResourceAssembler storeResourceAssembler = new StoreResourceAssembler();
 
     @Test

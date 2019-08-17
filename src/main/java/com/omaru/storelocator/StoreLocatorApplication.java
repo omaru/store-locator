@@ -10,12 +10,15 @@ import javax.inject.Inject;
 @SpringBootApplication
 public class StoreLocatorApplication implements CommandLineRunner {
 
+	public StoreLocatorApplication(CommandLineDataIngester commandLineDataIngester) {
+		this.commandLineDataIngester = commandLineDataIngester;
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(StoreLocatorApplication.class, args);
 	}
 
-	@Inject
-	private CommandLineDataIngester commandLineDataIngester;
+	private final CommandLineDataIngester commandLineDataIngester;
 	@Override
 	public void run(String... args) throws Exception {
 		commandLineDataIngester.accept(args);

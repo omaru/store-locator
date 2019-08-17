@@ -1,7 +1,6 @@
 package com.omaru.storelocator.resource;
 
 import com.omaru.storelocator.controller.StoreController;
-import com.omaru.storelocator.domain.model.Location;
 import com.omaru.storelocator.domain.model.Store;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;

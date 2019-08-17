@@ -13,22 +13,23 @@ import org.springframework.core.io.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 @ExtendWith(MockitoExtension.class)
-public class MongoStoreJsonScriptRunnerShould {
+class MongoStoreJsonScriptRunnerShould {
     private ScriptRunner runner;
     @Mock
     private StoreService storeService;
     @Mock
     private StoresJsonReader storesJsonReader;
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         runner = new MongoStoreJsonScriptRunner(storeService,storesJsonReader);
     }
     @Test
     void beAbleToRunFromInputStream() throws Exception {
         String input ="";
-        final InputStream inputStream = new ByteArrayInputStream(input.getBytes(Charset.forName("UTF-8")));
+        final InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         runner.run(inputStream);
     }
     @Test

@@ -1,6 +1,5 @@
 package com.omaru.storelocator.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.omaru.storelocator.domain.model.Store;
 import com.omaru.storelocator.domain.service.StoreService;
 import com.omaru.storelocator.resource.StoreResource;
@@ -28,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(StoreController.class)
-public class StoreControllerShould {
+class StoreControllerShould {
     @Inject
     private MockMvc mockMvc;
     @MockBean
@@ -38,7 +37,7 @@ public class StoreControllerShould {
     @MockBean
     private CommandLineDataIngester commandLineDataIngester;
     @Test
-    public void beAbleToRetrieveStoreById() throws Exception {
+    void beAbleToRetrieveStoreById() throws Exception {
         StoreResource storeResource = getStoreResources().get(0);
         given(storeService.get(anyString())).willReturn(Optional.of(new Store()));
         given(storeResourceAssembler.toResource(any())).willReturn(storeResource);
@@ -47,12 +46,12 @@ public class StoreControllerShould {
                 is(storeResource.getUuid())));
     }
     @Test
-    public void return404IfNoStoreIsFound() throws Exception {
+    void return404IfNoStoreIsFound() throws Exception {
         mockMvc.perform(get("/store/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
     @Test
-    public void beAbleToRetrieveAvailableStores() throws Exception {
+    void beAbleToRetrieveAvailableStores() throws Exception {
         List<StoreResource> storeResources = getStoreResources();
         given(storeResourceAssembler.toResources(any())).willReturn(storeResources);
         mockMvc.perform(get("/store/").contentType(MediaType.APPLICATION_JSON))
@@ -60,7 +59,7 @@ public class StoreControllerShould {
                 is(storeResources.get(0).getUuid())));
     }
     @Test
-    public void beAbleToRetrieveAvailableStoresByGivenPoint() throws Exception {
+    void beAbleToRetrieveAvailableStoresByGivenPoint() throws Exception {
         List<StoreResource> storeResources = getStoreResources();
         given(storeResourceAssembler.toResources(any())).willReturn(storeResources);
         mockMvc.perform(get("/store/")

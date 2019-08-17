@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(MainController.class)
-public class MainControllerShould {
+class MainControllerShould {
     @Inject
     private MockMvc mockMvc;
     @MockBean

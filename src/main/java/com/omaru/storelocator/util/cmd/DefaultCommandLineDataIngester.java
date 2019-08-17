@@ -9,16 +9,15 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
 public class DefaultCommandLineDataIngester implements CommandLineDataIngester{
-    private ScriptRunner scriptRunner;
-    private String defaultScriptName;
-    private  CommandLineMenu commandLineMenu;
+    private final ScriptRunner scriptRunner;
+    private final String defaultScriptName;
+    private final CommandLineMenu commandLineMenu;
     @Inject
     public DefaultCommandLineDataIngester(CommandLineMenu commandLineMenu,
                                           ScriptRunner scriptRunner,
