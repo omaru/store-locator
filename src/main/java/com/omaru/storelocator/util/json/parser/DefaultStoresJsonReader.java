@@ -29,7 +29,7 @@ import static org.json.simple.parser.ParseException.ERROR_UNEXPECTED_EXCEPTION;
 public class DefaultStoresJsonReader implements StoresJsonReader {
     private static final Integer MINUTE_INDEX = 1;
     private static final Integer HOUR_INDEX = 0;
-
+    private static final String CLOSED_STORE="Gesloten";
     @Override
     public  Collection<Store> from(Resource resource){
         try {
@@ -104,7 +104,14 @@ public class DefaultStoresJsonReader implements StoresJsonReader {
     }
 
     private static final LocalTime parseTimeValue(String time) {
+        if(storeIsClosed(time)){
+            return null;
+        }
         String hourMinutes[] = time.split(":");
         return LocalTime.of(parseInt(hourMinutes[HOUR_INDEX]), parseInt(hourMinutes[MINUTE_INDEX]));
+    }
+
+    private static boolean storeIsClosed(String time) {
+        return CLOSED_STORE.equals(time);
     }
 }

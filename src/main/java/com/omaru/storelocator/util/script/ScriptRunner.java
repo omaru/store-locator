@@ -3,6 +3,7 @@ package com.omaru.storelocator.util.script;
 import org.springframework.core.io.Resource;
 
 import java.io.InputStream;
+import java.util.function.Supplier;
 
 public interface ScriptRunner {
     void run(Resource resource) throws Exception;

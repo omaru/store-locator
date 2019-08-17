@@ -156,4 +156,35 @@ public class DefaultStoresJsonReaderShould {
         final InputStream stream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
         Assertions.assertThrows(StoreJsonReaderException.class, () -> storesJsonReader.from(stream));
     }
+    @Test
+    void whenClosedTimeToNull() throws IOException, ParseException {
+        String jsonInput = "{\n" +
+                "  \"stores\": [\n" +
+                "    {\n" +
+                "      \"city\": \"'s Gravendeel\",\n" +
+                "      \"postalCode\": \"3295 BD\",\n" +
+                "      \"street\": \"Kerkstraat\",\n" +
+                "      \"street2\": \"37\",\n" +
+                "      \"street3\": \"\",\n" +
+                "      \"addressName\": \"Jumbo 's Gravendeel Gravendeel Centrum\",\n" +
+                "      \"uuid\": \"EOgKYx4XFiQAAAFJa_YYZ4At\",\n" +
+                "      \"longitude\": \"23\",\n" +
+                "      \"latitude\": \"4.615551\",\n" +
+                "      \"complexNumber\": \"33249\",\n" +
+                "      \"showWarningMessage\": true,\n" +
+                "      \"todayOpen\": \"Gesloten\",\n" +
+                "      \"locationType\": \"SupermarktPuP\",\n" +
+                "      \"collectionPoint\": true,\n" +
+                "      \"sapStoreID\": \"3605\",\n" +
+                "      \"todayClose\": \"Gesloten\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+        final InputStream inputStream = new ByteArrayInputStream(jsonInput.getBytes(Charset.forName("UTF-8")));
+        Collection<Store> stores = storesJsonReader.from(inputStream);
+        assertThat(stores).hasSize(1);
+        assertThat(stores.iterator().next().getTodayOpen()).isNull();
+        assertThat(stores.iterator().next().getTodayClose()).isNull();
+
+    }
 }

@@ -23,7 +23,7 @@ public class StoreResourceAssembler extends ResourceAssemblerSupport<Store,Store
 
     private void addRelations(StoreResource resource,Store store) {
         resource.add(linkTo(methodOn(StoreController.class).getStore(store.getId())).withSelfRel());
-        resource.add(linkTo(StoreController.class).slash("?longitude={longitude}&latitude={latitude}")
+        resource.add(linkTo(StoreController.class).slash("?latitude={latitude}&longitude={longitude}")
                 .withRel(Relations.LOCATION.getRelation()));
     }
 }

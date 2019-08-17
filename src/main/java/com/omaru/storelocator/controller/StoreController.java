@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value="/store/")
+@RequestMapping(value="/store")
 public class StoreController {
     private final StoreService storeService;
     private final StoreResourceAssembler storeResourceAssembler;
@@ -26,7 +26,7 @@ public class StoreController {
         this.storeService = storeService;
         this.storeResourceAssembler = storeResourceAssembler;
     }
-    @RequestMapping(value={""},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value={"/"},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<StoreResource>> getStores(){
         Collection<Store> stores =storeService.get();
         return new ResponseEntity<>(storeResourceAssembler.toResources(stores), HttpStatus.OK);
