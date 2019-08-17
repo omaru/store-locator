@@ -1,9 +1,11 @@
 package com.omaru.storelocator.util.cmd;
 
+import com.omaru.storelocator.util.cmd.exception.CommandLineDataIngesterException;
 import org.apache.commons.cli.CommandLine;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CommandLineMenuShould {
     @Test
