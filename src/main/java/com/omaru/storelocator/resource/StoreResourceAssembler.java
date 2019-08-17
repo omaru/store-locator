@@ -2,6 +2,7 @@ package com.omaru.storelocator.resource;
 
 import com.omaru.storelocator.controller.StoreController;
 import com.omaru.storelocator.domain.model.Store;
+import org.springframework.data.geo.Distance;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +20,14 @@ public class StoreResourceAssembler extends ResourceAssemblerSupport<Store,Store
         addRelations(resource,store);
         return resource;
     }
-
+    public StoreResource toResource(Store store, Distance distance){
+        StoreResource resource = toResource(store);
+        resource.setDistanceFromLocation(distance);
+        return resource;
+    }
     private void addRelations(StoreResource resource,Store store) {
         resource.add(linkTo(methodOn(StoreController.class).getStore(store.getId())).withSelfRel());
-        resource.add(linkTo(StoreController.class).slash("?latitude={latitude}&longitude={longitude}")
-                .withRel(Relations.LOCATION.getRelation()));
+        resource.add(linkTo(methodOn(StoreController.class).getStores(store.getLocation().getLocation().getX(),
+                store.getLocation().getLocation().getY())).withRel(Relations.LOCATION.getRelation()));
     }
 }

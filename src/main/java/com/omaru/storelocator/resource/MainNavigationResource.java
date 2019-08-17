@@ -8,7 +8,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 public class MainNavigationResource extends ResourceSupport {
     public MainNavigationResource(){
-        this.add(linkTo(methodOn(StoreController.class).getStores(null,null)).withRel("stores"));
+        this.add(linkTo(methodOn(StoreController.class).getStores()).withRel(Relations.STORE.getRelation()));
     }
 
 }

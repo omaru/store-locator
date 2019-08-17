@@ -2,6 +2,7 @@ package com.omaru.storelocator.controller;
 
 import com.omaru.storelocator.domain.model.Store;
 import com.omaru.storelocator.domain.service.StoreService;
+import com.omaru.storelocator.resource.GeoPageStoreResourceAssembler;
 import com.omaru.storelocator.resource.StoreResource;
 import com.omaru.storelocator.resource.StoreResourceAssembler;
 import com.omaru.storelocator.util.cmd.CommandLineDataIngester;
@@ -36,6 +37,8 @@ class StoreControllerShould {
     private StoreResourceAssembler storeResourceAssembler;
     @MockBean
     private CommandLineDataIngester commandLineDataIngester;
+    @MockBean
+    private GeoPageStoreResourceAssembler geoPageStoreResourceAssembler;
     @Test
     void beAbleToRetrieveStoreById() throws Exception {
         StoreResource storeResource = getStoreResources().get(0);

@@ -4,6 +4,7 @@ import com.omaru.storelocator.domain.model.Location;
 import com.omaru.storelocator.domain.model.Store;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.geo.Distance;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.time.LocalTime;
@@ -16,6 +17,7 @@ public class StoreResource extends ResourceSupport {
     private LocalTime todayOpen;
     private LocalTime todayClose;
     private Location location;
+    private Distance distanceFromLocation;
     public StoreResource(Store store){
         setUuid(store.getUuid());
         setSapStoreID(store.getSapStoreID());
