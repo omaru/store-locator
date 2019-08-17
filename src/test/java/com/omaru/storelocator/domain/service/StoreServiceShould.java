@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,6 +37,13 @@ public class StoreServiceShould {
 		Optional<Store> store = storeService.getByUuid("1");
 		assertTrue(store.isPresent());
 		assertThat(store.get().getUuid()).isEqualTo("1");
+	}
+
+	@Test
+	void beAbleToRetrieveAllAvailableStores(){
+		Collection<Store> stores = storeService.get();
+		assertThat(stores).hasSize(10);
+		assertThat(stores).isInstanceOf(Set.class);
 	}
 
 	@Test
