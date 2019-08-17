@@ -1,7 +1,7 @@
 package com.omaru.storelocator.util.cmd;
 
 import com.omaru.storelocator.util.script.ScriptRunner;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 import javax.inject.Inject;
 import java.io.FileInputStream;
 import java.util.Optional;
-
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
 public class DefaultCommandLineDataIngester implements CommandLineDataIngester{

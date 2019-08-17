@@ -6,6 +6,7 @@ import com.omaru.storelocator.domain.service.StoreService;
 import com.omaru.storelocator.resource.StoreResource;
 import com.omaru.storelocator.resource.StoreResourceAssembler;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.geo.GeoPage;
 import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,8 +34,7 @@ public class StoreController {
     }
     @RequestMapping(value={""},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE,params={"latitude","longitude"})
     public ResponseEntity<Collection<StoreResource>> getStores(@RequestParam Double  latitude,@RequestParam Double longitude){
-        storeService.getStoresByAddressLocationNear(new Point(latitude,longitude), DEFAULT_TEN_RESULTS_PAGINATION);
-        Collection<Store> stores =storeService.get();
+        GeoPage<Store> stores = storeService.getStoresByAddressLocationNear(new Point(latitude,longitude), DEFAULT_TEN_RESULTS_PAGINATION);
         return new ResponseEntity<>(storeResourceAssembler.toResources(stores), HttpStatus.OK);
     }
     @RequestMapping(value={"{id}"},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
