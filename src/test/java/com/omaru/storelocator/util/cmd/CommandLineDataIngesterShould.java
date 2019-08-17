@@ -21,7 +21,7 @@ public class CommandLineDataIngesterShould {
     private CommandLineDataIngester commandLineDataIngester;
     @BeforeEach
     public void setUp(){
-        commandLineDataIngester = new DefaultCommandgLineDataIngester(commandLineMenu,scriptRunner,"test");
+        commandLineDataIngester = new DefaultCommandLineDataIngester(commandLineMenu,scriptRunner,"test");
     }
     @Test
     void onFileRoutePresentRunFromFile() throws Exception {
