@@ -2,7 +2,7 @@ package com.omaru.storelocator.resource;
 
 public enum Relations {
     LOCATION("near-location");
-    private String relation;
+    private final String relation;
     Relations(String relation){
         this.relation = relation;
     }

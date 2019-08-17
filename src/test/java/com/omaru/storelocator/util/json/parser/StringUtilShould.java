@@ -6,7 +6,7 @@ import static com.omaru.storelocator.util.json.parser.StringUtil.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class StringUtilShould {
+class StringUtilShould {
     @Test
     void returnTrueIfStringIsNullOrBlank(){
         boolean result = isNullOrBlank("");

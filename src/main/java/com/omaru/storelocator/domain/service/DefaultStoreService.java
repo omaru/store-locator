@@ -17,7 +17,7 @@ import java.util.stream.StreamSupport;
 @Component
 public class DefaultStoreService implements StoreService {
 
-    private StoreRepository storeRepository;
+    private final StoreRepository storeRepository;
     @Inject
     public DefaultStoreService(StoreRepository storeRepository){
         this.storeRepository=storeRepository;

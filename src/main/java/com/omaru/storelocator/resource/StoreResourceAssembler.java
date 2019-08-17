@@ -1,7 +1,6 @@
 package com.omaru.storelocator.resource;
 
 import com.omaru.storelocator.controller.StoreController;
-import com.omaru.storelocator.domain.model.Location;
 import com.omaru.storelocator.domain.model.Store;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -23,7 +22,7 @@ public class StoreResourceAssembler extends ResourceAssemblerSupport<Store,Store
 
     private void addRelations(StoreResource resource,Store store) {
         resource.add(linkTo(methodOn(StoreController.class).getStore(store.getId())).withSelfRel());
-        resource.add(linkTo(StoreController.class).slash("?longitude={longitude}&latitude={latitude}")
+        resource.add(linkTo(StoreController.class).slash("?latitude={latitude}&longitude={longitude}")
                 .withRel(Relations.LOCATION.getRelation()));
     }
 }

@@ -21,15 +21,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class StoreServiceShould {
+class StoreServiceShould {
 	@Inject
 	private StoreService storeService;
-	private Collection<Store> stores = MockUtil.getStores();
+	private final Collection<Store> stores = MockUtil.getStores();
 	@BeforeEach
 	void setUp(){
 		storeService.deleteAll();
 		Consumer<Store> saveStores = s->{s.setId(null);storeService.save(s);};
-		stores.stream().forEach(saveStores);
+		stores.forEach(saveStores);
 
 	}
 	@Test	
