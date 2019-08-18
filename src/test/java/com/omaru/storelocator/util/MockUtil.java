@@ -3,9 +3,11 @@ package com.omaru.storelocator.util;
 import com.omaru.storelocator.domain.model.Address;
 import com.omaru.storelocator.domain.model.Location;
 import com.omaru.storelocator.domain.model.Store;
+import com.omaru.storelocator.resource.GeoPageStoreResource;
+import com.omaru.storelocator.resource.GeoPageStoreResourceAssembler;
 import com.omaru.storelocator.resource.StoreResource;
 import com.omaru.storelocator.resource.StoreResourceAssembler;
-import org.springframework.data.geo.Point;
+import org.springframework.data.geo.*;
 
 import java.time.LocalTime;
 import java.util.Collection;
@@ -15,12 +17,21 @@ import java.util.stream.Stream;
 
 public class MockUtil {
     private static final StoreResourceAssembler storeResourceAssembler = new StoreResourceAssembler();
+    private static final GeoPageStoreResourceAssembler geoPageStoreResourceAssembler = new GeoPageStoreResourceAssembler(storeResourceAssembler);
 
     private MockUtil() throws IllegalAccessException{
         throw new IllegalAccessException("utility class");
     }
+
     public static List<StoreResource> getStoreResources(){
         return storeResourceAssembler.toResources(getStores());
+    }
+    public static GeoPageStoreResource getGeoPageStoreResource(){
+        GeoPageStoreResourceAssembler geoPageStoreResourceAssembler = new GeoPageStoreResourceAssembler(new StoreResourceAssembler());
+        List<GeoResult<Store>> results = getStores().stream()
+                .map(s->new GeoResult<>(s,new Distance(1d, Metrics.KILOMETERS))).collect(Collectors.toList());
+        GeoPage<Store> geoPage = new GeoPage<>(new GeoResults(results));
+        return  geoPageStoreResourceAssembler.toResource(geoPage);
     }
     public static Collection<Store> getStores(){
         return Stream.of(

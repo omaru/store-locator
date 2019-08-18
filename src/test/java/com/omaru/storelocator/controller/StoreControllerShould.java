@@ -2,9 +2,11 @@ package com.omaru.storelocator.controller;
 
 import com.omaru.storelocator.domain.model.Store;
 import com.omaru.storelocator.domain.service.StoreService;
+import com.omaru.storelocator.resource.GeoPageStoreResource;
 import com.omaru.storelocator.resource.GeoPageStoreResourceAssembler;
 import com.omaru.storelocator.resource.StoreResource;
 import com.omaru.storelocator.resource.StoreResourceAssembler;
+import com.omaru.storelocator.util.MockUtil;
 import com.omaru.storelocator.util.cmd.CommandLineDataIngester;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +20,7 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
+import static com.omaru.storelocator.util.MockUtil.getGeoPageStoreResource;
 import static com.omaru.storelocator.util.MockUtil.getStoreResources;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -63,11 +66,11 @@ class StoreControllerShould {
     }
     @Test
     void beAbleToRetrieveAvailableStoresByGivenPoint() throws Exception {
-        List<StoreResource> storeResources = getStoreResources();
-        given(storeResourceAssembler.toResources(any())).willReturn(storeResources);
+        GeoPageStoreResource geoPageStoreResource = getGeoPageStoreResource();
+        given(geoPageStoreResourceAssembler.toResource(any())).willReturn(geoPageStoreResource);
         mockMvc.perform(get("/store/")
                 .param("latitude","3").param("longitude","2").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(jsonPath("$[0].uuid",
-                is(storeResources.get(0).getUuid())));
+                .andExpect(status().isOk()).andExpect(jsonPath("totalElements",
+                is(geoPageStoreResource.getTotalElements().intValue())));
     }
 }

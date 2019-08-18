@@ -24,7 +24,7 @@ public class StoreController {
     private final StoreService storeService;
     private final StoreResourceAssembler storeResourceAssembler;
     private final GeoPageStoreResourceAssembler geoPageStoreResourceAssembler;
-    private static final PageRequest DEFAULT_TEN_RESULTS_PAGINATION = PageRequest.of(0,10);
+    private static final PageRequest DEFAULT_NUMBER_OF_RESULTS_PAGINATION = PageRequest.of(0,5);
     @Inject
     public StoreController(StoreService storeService, StoreResourceAssembler storeResourceAssembler,
                            GeoPageStoreResourceAssembler geoPageStoreResourceAssembler){
@@ -39,7 +39,7 @@ public class StoreController {
     }
     @RequestMapping(value={"","/"},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE,params={"latitude","longitude"})
     public ResponseEntity<GeoPageStoreResource> getStores(@RequestParam Double  latitude, @RequestParam Double longitude){
-        GeoPage<Store> stores = storeService.getStoresByAddressLocationNear(new Point(latitude,longitude), DEFAULT_TEN_RESULTS_PAGINATION);
+        GeoPage<Store> stores = storeService.getStoresByAddressLocationNear(new Point(latitude,longitude), DEFAULT_NUMBER_OF_RESULTS_PAGINATION);
         return new ResponseEntity<>(geoPageStoreResourceAssembler.toResource(stores), HttpStatus.OK);
     }
     @RequestMapping(value={"{id}"},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
