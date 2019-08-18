@@ -10,7 +10,7 @@
 ```bash
 ./gradlew  build
 ``` 
-   -  jar file will be contained inside `$PROJECT_HOME/build/libs` folder, once task is done,execute execute with 
+   -  jar file will be contained inside `$PROJECT_HOME/build/libs` folder, once task is done,execute it with 
    `java -jar $PROJECTNAME.jar`.
    ![image](https://user-images.githubusercontent.com/877539/63227997-2d4af900-c1aa-11e9-9913-9f8cd29ad077.png)
 
@@ -27,7 +27,7 @@
 - codecov
 - codeclimate
 #### Documentation
-To see the swagger api documentation, access to the default route `http://localhost:8080/swagger-ui.html`
+To see the swagger api documentation, access swagger's default route `http://localhost:8080/swagger-ui.html`
 #### Actuator Endpoints
 Active actuator endpoints are `health` and `metrics`, going to `/actuator` gives available hypermedia links for them.
 ![image](https://user-images.githubusercontent.com/877539/63227824-01c70f00-c1a8-11e9-9d51-a3138e714972.png)
