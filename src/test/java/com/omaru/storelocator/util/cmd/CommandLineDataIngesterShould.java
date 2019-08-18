@@ -13,14 +13,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CommandLineDataIngesterShould {
+class CommandLineDataIngesterShould {
     @Mock
     private CommandLineMenu commandLineMenu;
     @Mock
     private ScriptRunner scriptRunner;
     private CommandLineDataIngester commandLineDataIngester;
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         commandLineDataIngester = new DefaultCommandLineDataIngester(commandLineMenu,scriptRunner,"test");
     }
     @Test

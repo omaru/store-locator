@@ -6,7 +6,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class StoreLocatorApplicationTests {
+class ApplicationTests {
 
 	@Test
     void contextLoads() {

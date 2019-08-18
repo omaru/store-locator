@@ -7,6 +7,7 @@ import com.omaru.storelocator.resource.GeoPageStoreResource;
 import com.omaru.storelocator.resource.GeoPageStoreResourceAssembler;
 import com.omaru.storelocator.resource.StoreResource;
 import com.omaru.storelocator.resource.StoreResourceAssembler;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.geo.GeoPage;
 import org.springframework.data.geo.Point;
@@ -24,13 +25,15 @@ public class StoreController {
     private final StoreService storeService;
     private final StoreResourceAssembler storeResourceAssembler;
     private final GeoPageStoreResourceAssembler geoPageStoreResourceAssembler;
-    private static final PageRequest DEFAULT_NUMBER_OF_RESULTS_PAGINATION = PageRequest.of(0,5);
+    private  final PageRequest defaultNumberOfResultsPagination;
     @Inject
     public StoreController(StoreService storeService, StoreResourceAssembler storeResourceAssembler,
-                           GeoPageStoreResourceAssembler geoPageStoreResourceAssembler){
+                           GeoPageStoreResourceAssembler geoPageStoreResourceAssembler,
+                           @Value("${default.page.request.size}")Integer pageRequestSize){
         this.storeService = storeService;
         this.storeResourceAssembler = storeResourceAssembler;
         this.geoPageStoreResourceAssembler=geoPageStoreResourceAssembler;
+        this.defaultNumberOfResultsPagination = PageRequest.of(0,pageRequestSize);
     }
     @RequestMapping(value={"/"},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<StoreResource>> getStores(){
@@ -39,7 +42,7 @@ public class StoreController {
     }
     @RequestMapping(value={"","/"},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE,params={"latitude","longitude"})
     public ResponseEntity<GeoPageStoreResource> getStores(@RequestParam Double  latitude, @RequestParam Double longitude){
-        GeoPage<Store> stores = storeService.getStoresByAddressLocationNear(new Point(latitude,longitude), DEFAULT_NUMBER_OF_RESULTS_PAGINATION);
+        GeoPage<Store> stores = storeService.getStoresByAddressLocationNear(new Point(latitude,longitude), defaultNumberOfResultsPagination);
         return new ResponseEntity<>(geoPageStoreResourceAssembler.toResource(stores), HttpStatus.OK);
     }
     @RequestMapping(value={"{id}"},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)

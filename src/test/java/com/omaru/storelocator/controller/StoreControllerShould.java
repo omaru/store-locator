@@ -6,7 +6,6 @@ import com.omaru.storelocator.resource.GeoPageStoreResource;
 import com.omaru.storelocator.resource.GeoPageStoreResourceAssembler;
 import com.omaru.storelocator.resource.StoreResource;
 import com.omaru.storelocator.resource.StoreResourceAssembler;
-import com.omaru.storelocator.util.MockUtil;
 import com.omaru.storelocator.util.cmd.CommandLineDataIngester;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
