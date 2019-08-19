@@ -51,14 +51,13 @@ java -jar store-locator-0.0.1-SNAPSHOT.jar -i /path/to/file.json
 ```
 If no option is provided , data is populated from `store-test.json` 
 located in  `resources` folder.
-#### CRUD Operations
-##### Get Stores
+#### Operations
+##### Get Stores nearby by location
+###### Retrieves  5 stores given a location point (latitude,longitude) and its distance.
+![image](https://user-images.githubusercontent.com/877539/63227965-bada1900-c1a9-11e9-9293-b49ec1884b2b.png)
+#### Get Stores
 ###### Retrieves all available stores.
 ![image](https://user-images.githubusercontent.com/877539/63227936-5dde6300-c1a9-11e9-83a7-64c0f4d0865d.png)
 ##### Get Store
 ###### Retrieves  a store information by id.
 ![image](https://user-images.githubusercontent.com/877539/63227957-92521f00-c1a9-11e9-844a-1c1b43290779.png)
-##### Get Stores nearby by location
-###### Retrieves  5 stores given a location point (latitude,longitude) and its distance.
-![image](https://user-images.githubusercontent.com/877539/63227965-bada1900-c1a9-11e9-9293-b49ec1884b2b.png)
-
